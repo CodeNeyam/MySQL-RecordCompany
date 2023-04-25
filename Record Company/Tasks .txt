@@ -1,0 +1,48 @@
+1-Create Song table, This table should be called songs and have four properties with these exact names : 
+
+CREATE TABLE songs (
+	id INT PRIMARY KEY AUTO_INCREAMENT
+	name VARCHAR(255) NOT NULL,
+	length FLOAT NOT NULL,
+	album_id INT,
+	FOREIGN KEY(album_id) REFERENCES albums(id)
+);
+
+
+-Make sure after this to insert all the data from the note INSERT
+
+
+2-SELECT only the name of all the bands and make sure the table name become Band Name : 
+==>SELECT bands.name AS 'Band Name' FROM bands;
+
+
+3-Select the Oldest Album : 
+==>SELECT * FROM albums WHERE release_year IS NOT NULL ORDER release_year LIMITE 1;
+
+
+4-Get all the bands that have albums :
+==>SELECT DISTINCT bands.name AS 'Band Name' FROM bands
+INNER JOIN albums ON albums.band_id = bands.id;
+
+
+5-Get all the bands that's have no albums :
+==>SELECT bands.name AS 'Band Name' FROM bands LEFT JOIN albums ON bands.id = albums.band_id
+GROUP BY albums.band_id HAVING COUNT(albums.id) = 0;
+
+6-Get the longest Album :
+==>SELECT albums.name as Name, albums.release_year as 'Release Year', SUM(songs.length) as 'Duration'
+FROM albums JOIN songs on albums.id = songs.album_id GROUP BY songs.album_id
+ORDER BY Duration DESC LIMIT 1;
+
+7-Update the release year of the album with no release : 
+==>UPDATE albums SET release_year = 1986 WHERE id = 4;
+
+8-Delete any band or Album you want : 
+==>DELETE FROM albums WHERE id = 19; -- DELETE FROM bands WHERE id = 8;
+
+9-Get the Average Lenght of all the Songs
+==>SELECT AVG(length) as 'Average Song Duration' FROM songs;
+
+
+
+
